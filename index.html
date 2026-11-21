@@ -72,7 +72,12 @@ form{background:#fff;border:1px solid #dce4ef;border-radius:18px;padding:clamp(1
       <p style="margin:0; font-weight:bold; color:#1b5e20;">देय आवेदन शुल्क (Registration Fee):</p>
       <h2 id="feeText" style="margin:8px 0; color:#d32f2f; font-size:26px;">₹0 (पहले कक्षा चुनें)</h2>
       <p style="font-size:13px; margin:5px 0;">नीचे दिए गए <b>JAN KALYAN SANSTHAN</b> के SBI QR कोड को स्कैन करके फ़ीस जमा करें:</p>
-      <img src="IMG-20260809-WA0048.jpg" alt="SBI QR Code" style="width:200px; max-width:100%; border-radius:8px; margin:10px auto; display:block;">
+      <img src="IMG-20260809-WA0048.jpg" alt="SBI QR Code" style="width:200px; max-width:100%; border-radius:8px; margin:10px auto; display:block;"><div style="margin:12px auto; padding:10px; background:#fff; border:1px solid #ccc; border-radius:8px; max-width:300px; text-align:center;">
+  <p style="margin:0 0 5px 0; font-size:13px; color:#333;">QR स्कैन न हो, तो UPI ID कॉपी करके पेमेंट करें:</p>
+  <b style="color:#0056b3; font-size:15px;">jankalyansansthan@sbi</b><br>
+  <button type="button" onclick="copyUPI()" style="margin-top:8px; padding:6px 14px; background:#198754; color:#fff; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">UPI ID कॉपी करें</button>
+      </div>
+     
       <input type="hidden" id="feeAmount" name="fee" value="0">
     </div>
 
@@ -89,6 +94,10 @@ function updateClassFee() {
   document.getElementById("feeText").innerText = fee === "0" ? "₹0 (पहले कक्षा चुनें)" : "₹" + fee;
   document.getElementById("feeAmount").value = fee;
 }
+   function copyUPI() {
+  navigator.clipboard.writeText("jankalyansansthan@sbi");
+  alert("UPI ID कॉपी हो गई है! अब PhonePe या GPay में जाकर पेस्ट करें।");
+ }
 </script>
  
 <section id="contact"><div class="wrap"><h2 class="title">संपर्क करें</h2><p class="lead">संस्था एवं प्रतियोगिता से संबंधित जानकारी</p><div class="contactGrid"><div class="contact"><h3>संस्था का पता</h3><p>जन कल्याण संस्थान<br>रेहरा बाजार, बलरामपुर<br>उत्तर प्रदेश, भारत</p></div><div class="contact"><h3>प्रबंधक एवं संपर्क</h3><p>प्रबंधक: सुरेश कुमार</p><p>फोन / WhatsApp: <a href="tel:+918726999460">8726 999 460</a></p><p><a href="https://wa.me/918726999460" target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a></p></div></div></div></section>
