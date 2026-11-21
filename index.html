@@ -38,12 +38,7 @@ form{background:#fff;border:1px solid #dce4ef;border-radius:18px;padding:clamp(1
 <img src="IMG_20260325_131624.jpg" alt="जन कल्याण संस्थान" style="width: 150px; border-radius: 10px; margin: 10px;"><img src="IMG_20250708_143722.jpg" alt="Photo 1" style="width:100%; border-radius:10px; margin:10px;"><img src=" alt="New Photo 1" style="width:100%; border-radius:10px; margin:10px;"><img src=" alt="New Photo 1" style="width:100%; border-radius:10px; margin:10px;"><img src="IMG_20260116_141309.jpg" alt="New Photo 1" style="width:100%; border-radius:10px; margin:10px;"><img src="IMG_20260116_141342.jpg" alt="New Photo 3" style="width:100%; border-radius:10px; margin:10px;">
  
 <img src="IMG_20260126_130850.jpg" alt="New Photo 2" style="width:100%; border-radius:10px; margin:10px;">
- 
-<img src=" alt="New Photo 2" style="width:100%; border-radius:10px; margin:10px;">
-<img src=" alt="New Photo 3" style="width:100%; border-radius:10px; margin:10px;">
- 
-<img src="दूसरी_नई_फ़ोटो_का_नाम.jpg" alt="New Photo 2" style="width:100%; border-radius:10px; margin:10px;">
-<img src="तीसरी_नई_फ़ोटो_का_नाम.jpg" alt="New Photo 3" style="width:100%; border-radius:10px; margin:10px;">
+
 
 <img src="IMG_20260313_144821.jpg" alt="Photo 2" style="width:100%; border-radius:10px; margin:10px;">
 <img src="IMG_20260325_131916.jpg" alt="Photo 3" style="width:100%; border-radius:10px; margin:10px;">
@@ -52,21 +47,50 @@ form{background:#fff;border:1px solid #dce4ef;border-radius:18px;padding:clamp(1
 <img src="IMG_20260602_162749.jpg" alt="जन कल्याण संस्थान" style="width: 150px; border-radius: 10px; margin: 10px;">
   </div>  </section>
 <section><div class="wrap"><h2 class="title">प्रतियोगिता में भाग लेने के लाभ</h2><div class="steps"><div class="step"><strong>आत्मविश्वास</strong><p>बच्चों को अपनी योग्यता दिखाने और नए अनुभव प्राप्त करने का अवसर मिलता है।</p></div><div class="step"><strong>सोचने की क्षमता</strong><p>प्रश्नों के माध्यम से तर्क, स्मरण शक्ति और समस्या-समाधान कौशल का अभ्यास होता है।</p></div><div class="step"><strong>प्रतिभा का सम्मान</strong><p>आयोजक द्वारा घोषित नियमों के अनुसार विजेताओं को प्रमाण-पत्र एवं आकर्षक पुरस्कार दिए जाएंगे।</p></div></div></div></section>
-<section class="soft" id="apply"><div class="wrap"><h2 class="title">प्रतियोगिता के लिए ऑनलाइन आवेदन</h2><p class="lead">विद्यार्थी का फॉर्म भरें। आवेदन WhatsApp संदेश के रूप में भी भेजा जा सकेगा।</p><div class="notice">डेटाबेस में आवेदन सुरक्षित रखने के लिए नीचे दिए गए निर्देशों के अनुसार Google Sheet और Apps Script कनेक्ट करना आवश्यक है। जब तक व्यवस्थापक Apps Script URL नहीं जोड़ते, आवेदन केवल WhatsApp के माध्यम से भेजा जा सकेगा।</div>
-<form id="applicationForm"><div class="grid">
-<div class="field"><label for="student">विद्यार्थी का पूरा नाम *</label><input id="student" name="student" required maxlength="100"></div>
-<div class="field"><label for="dob">जन्म तिथि *</label><input id="dob" name="dob" type="date" required></div>
-<div class="field"><label for="class">कक्षा *</label><select id="class" name="class" required><option value="">कक्षा चुनें</option><option>कक्षा 3</option><option>कक्षा 4</option><option>कक्षा 5</option><option>कक्षा 6</option><option>कक्षा 7</option><option>कक्षा 8</option><option>कक्षा 9</option><option>कक्षा 10</option><option>अन्य</option></select></div>
-<div class="field"><label for="school">विद्यालय / शिक्षण संस्थान *</label><input id="school" name="school" required maxlength="150"></div>
-<div class="field"><label for="guardian">माता-पिता / अभिभावक का नाम *</label><input id="guardian" name="guardian" required maxlength="100"></div>
-<div class="field"><label for="phone">अभिभावक का मोबाइल नंबर *</label><input id="phone" name="phone" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10 अंकों का नंबर" required></div>
-<div class="field full"><label for="address">पूरा पता *</label><textarea id="address" name="address" rows="3" maxlength="300" required></textarea></div>
-<div class="field"><label for="district">जिला *</label><input id="district" name="district" value="बलरामपुर" required maxlength="80"></div>
-<div class="field"><label for="email">ईमेल (वैकल्पिक)</label><input id="email" name="email" type="email" maxlength="120"></div>
-<div class="field full"><label for="notes">अतिरिक्त जानकारी (वैकल्पिक)</label><textarea id="notes" name="notes" rows="2" maxlength="300"></textarea></div>
-<div class="field full"><div class="check"><input type="checkbox" id="consent" required><label for="consent">मैं पुष्टि करता/करती हूँ कि दी गई जानकारी सही है और विद्यार्थी के आवेदन के लिए अभिभावक की सहमति है। *</label></div></div>
-<div class="field full"><button class="btn" type="submit">आवेदन जमा करें और WhatsApp खोलें</button><div class="hint">कृपया आधार नंबर या बैंक संबंधी जानकारी न भरें।</div></div></div><div id="status" class="status" role="status" aria-live="polite"></div></form>
+ <section class="soft" id="apply"><div class="wrap">
+  <h2 class="title">प्रतियोगिता ऑनलाइन आवेदन फ़ॉर्म</h2>
+  <form id="applicationForm" class="grid">
+    <div class="field"><label for="student">प्रतिभागी का नाम (Student Name) *</label><input id="student" name="student" required placeholder="पूरा नाम लिखें"></div>
+    <div class="field"><label for="guardian">पिता/अभिभावक का नाम *</label><input id="guardian" name="guardian" required placeholder="पिता का नाम लिखें"></div>
+    <div class="field"><label for="dob">जन्म तिथि (Date of Birth) *</label><input id="dob" name="dob" type="date" required></div>
+    <div class="field"><label for="aadhaar">आधार नंबर (12 अंकों का Aadhaar) *</label><input id="aadhaar" name="aadhaar" required pattern="[0-9]{12}" maxlength="12" placeholder="12 अंकों का आधार नंबर"></div>
+    <div class="field"><label for="class">कक्षा चुनें (Select Class) *</label>
+      <select id="class" name="class" required onchange="updateClassFee()">
+        <option value="">-- अपनी कक्षा चुनें --</option>
+        <option value="Class 6-8" data-fee="100">कक्षा 6 से 8 (फ़ीस: ₹100)</option>
+        <option value="Class 9-10" data-fee="150">कक्षा 9 से 10 (फ़ीस: ₹150)</option>
+        <option value="Class 11-12" data-fee="200">कक्षा 11 से 12 (फ़ीस: ₹200)</option>
+      </select>
+    </div>
+    <div class="field"><label for="phone">अभिभावक का मोबाइल नंबर *</label><input id="phone" name="phone" type="tel" required pattern="[0-9]{10}" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर"></div>
+    <div class="field"><label for="school">विद्यालय का नाम (School Name) *</label><input id="school" name="school" required placeholder="विद्यालय का पूरा नाम"></div>
+    <div class="field"><label for="school_phone">विद्यालय का संपर्क नंबर *</label><input id="school_phone" name="school_phone" type="tel" required pattern="[0-9]{10}" maxlength="10" placeholder="विद्यालय का 10 अंकों का नंबर"></div>
+    <div class="field full"><label for="address">पूरा पता (Address) *</label><input id="address" name="address" required placeholder="गाँव/शहर, पोस्ट, जिला"></div>
+    <div class="field full"><label for="signature">बच्चे के हस्ताक्षर की फ़ोटो अपलोड करें (Signature Photo) *</label><input id="signature" name="signature" type="file" accept="image/*" required></div>
+
+    <div class="field full" style="background:#e8f5e9; border:2px dashed #2e7d32; padding:15px; border-radius:10px; text-align:center;">
+      <p style="margin:0; font-weight:bold; color:#1b5e20;">देय आवेदन शुल्क (Registration Fee):</p>
+      <h2 id="feeText" style="margin:8px 0; color:#d32f2f; font-size:26px;">₹0 (पहले कक्षा चुनें)</h2>
+      <p style="font-size:13px; margin:5px 0;">नीचे दिए गए <b>JAN KALYAN SANSTHAN</b> के SBI QR कोड को स्कैन करके फ़ीस जमा करें:</p>
+      <img src="IMG-20260809-WA0048.jpg" alt="SBI QR Code" style="width:200px; max-width:100%; border-radius:8px; margin:10px auto; display:block;">
+      <input type="hidden" id="feeAmount" name="fee" value="0">
+    </div>
+
+    <div class="field full"><label for="utr">पेमेंट का 12 अंकों का UTR / Transaction ID *</label><input id="utr" name="utr" required placeholder="पेमेंट के बाद मिला UTR नंबर यहाँ लिखें"></div>
+    <div class="field full"><button class="btn" type="submit">आवेदन जमा करें (Submit Form)</button></div>
+    <div class="field full"><div id="status" style="display:none;"></div></div>
+  </form>
 </div></section>
+
+<script>
+function updateClassFee() {
+  var sel = document.getElementById("class");
+  var fee = sel.options[sel.selectedIndex].getAttribute("data-fee") || "0";
+  document.getElementById("feeText").innerText = fee === "0" ? "₹0 (पहले कक्षा चुनें)" : "₹" + fee;
+  document.getElementById("feeAmount").value = fee;
+}
+</script>
+ 
 <section id="contact"><div class="wrap"><h2 class="title">संपर्क करें</h2><p class="lead">संस्था एवं प्रतियोगिता से संबंधित जानकारी</p><div class="contactGrid"><div class="contact"><h3>संस्था का पता</h3><p>जन कल्याण संस्थान<br>रेहरा बाजार, बलरामपुर<br>उत्तर प्रदेश, भारत</p></div><div class="contact"><h3>प्रबंधक एवं संपर्क</h3><p>प्रबंधक: सुरेश कुमार</p><p>फोन / WhatsApp: <a href="tel:+918726999460">8726 999 460</a></p><p><a href="https://wa.me/918726999460" target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a></p></div></div></div></section>
 </main><footer><p><strong>जन कल्याण संस्थान</strong></p><p>रेहरा बाजार, बलरामपुर, उत्तर प्रदेश</p><p>पंजीकरण संख्या: BLR/01178/2025-26 | स्थापना वर्ष: 2025</p><p>© 2026 जन कल्याण संस्थान</p></footer>
 <script>
