@@ -66,6 +66,11 @@ form{background:#fff;border:1px solid #dce4ef;border-radius:18px;padding:clamp(1
     <div class="field"><label for="school">विद्यालय का नाम (School Name) *</label><input id="school" name="school" required placeholder="विद्यालय का पूरा नाम"></div>
     <div class="field"><label for="school_phone">विद्यालय का संपर्क नंबर *</label><input id="school_phone" name="school_phone" type="tel" required pattern="[0-9]{10}" maxlength="10" placeholder="विद्यालय का 10 अंकों का नंबर"></div>
     <div class="field full"><label for="address">पूरा पता (Address) *</label><input id="address" name="address" required placeholder="गाँव/शहर, पोस्ट, जिला"></div>
+   <div class="field full">
+  <label for="studentPhoto">बच्चे की पासपोर्ट साइज़ फ़ोटो अपलोड करें (Passport Photo - Optional)</label>
+  <input type="file" id="studentPhoto" name="studentPhoto" accept="image/*">
+   </div>
+   
     <div class="field full"><label for="signature">बच्चे के हस्ताक्षर की फ़ोटो अपलोड करें (Signature Photo) *</label><input id="signature" name="signature" type="file" accept="image/*" required></div>
 
     <div class="field full" style="background:#e8f5e9; border:2px dashed #2e7d32; padding:15px; border-radius:10px; text-align:center;">
