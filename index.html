@@ -162,8 +162,9 @@ form{background:#fff;border:1px solid #dce4ef;border-radius:18px;padding:clamp(1
     <!-- डाउनलोड, WhatsApp और एडिट बटन -->
     <div style="text-align:center; margin-top:20px; display:flex; flex-wrap:wrap; justify-content:center; gap:10px;">
       <button type="button" onclick="printApplication()" class="btn" style="background:#157347;">📥 फ़ॉर्म डाउनलोड / प्रिंट करें (PDF)</button>
-      <a id="waSendBtn" href="#" target="_blank" class="btn" style="background:#25D366; color:#fff;">📲 WhatsApp पर भेजें</a>
-      <button type="button" onclick="editApplication()" class="btn gold">✏️ जानकारी सुधारें (Edit)</button>
+            <button type="button" onclick="sendToWhatsApp()" class="btn" style="background:#25D366; color:#fff;">📲 WhatsApp पर भेजें</button>
+
+       <button type="button" onclick="editApplication()" class="btn gold">✏️ जानकारी सुधारें (Edit)</button>
     </div>
   </div>
 </div></section>
@@ -272,7 +273,22 @@ function editApplication() {
   document.getElementById('receiptBox').style.display = 'none';
   form.style.display = 'grid';
 }
+function sendToWhatsApp() {
+  var msg = "जन कल्याण संस्थान — प्रतियोगिता आवेदन\n" +
+    "प्रतिभागी: " + document.getElementById('p_student').innerText + "\n" +
+    "पिता/अभिभावक: " + document.getElementById('p_guardian').innerText + "\n" +
+    "जन्म तिथि: " + document.getElementById('p_dob').innerText + "\n" +
+    "आधार: " + document.getElementById('p_aadhaar').innerText + "\n" +
+    "कक्षा: " + document.getElementById('p_class').innerText + "\n" +
+    "मोबाइल: " + document.getElementById('p_phone').innerText + "\n" +
+    "विद्यालय: " + document.getElementById('p_school').innerText + "\n" +
+    "पता: " + document.getElementById('p_address').innerText + "\n" +
+    "शुल्क/UTR: " + document.getElementById('p_payment').innerText;
 
+    window.location.href = "https://wa.me/918726999460?text=" + encodeURIComponent(msg);
+  
+}
+    
 function printApplication() {
   const printContent = document.getElementById('printableArea').innerHTML;
   const win = window.open('', '', 'height=750,width=850');
