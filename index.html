@@ -203,9 +203,13 @@ function copyUPI() {
   document.execCommand("copy");
   document.body.removeChild(tempInput);
   alert("UPI ID कॉपी हो गई है: " + upiText);
-}
 
-const DATABASE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxptIlM7qzaxxKLdQyJ5jYGqpd0mqWMy_r3RZ-v5YYOtazumsIVmgQOKMP11irw8oFV/exec";
+  const DATABASE_WEB_APP_URL ="https://script.google.com/macros/s/AKfycbxptIlM7qzaxxKLdQyJ5jYGqpd0mqWMy_r3RZ-v5YYOtazumsIVmgQOKMP11irw8oFV/exec";
+  
+
+
+
+ ";
 const form = document.getElementById('applicationForm');
 
 form.addEventListener('submit', async function(e) {
@@ -243,33 +247,35 @@ form.addEventListener('submit', async function(e) {
   document.getElementById('waSendBtn').href = "https://wa.me" + waText;
 
   const photoInput = document.getElementById('studentPhoto');
-  if (photoInput.files && photoInput.files[0]) {
+  const photoFile = photoInput && photoInput.files ? photoInput.files.item(0) : null;
+  if (photoFile) {
     const reader1 = new FileReader();
     reader1.onload = function(ev) {
       document.getElementById('p_photo').src = ev.target.result;
       document.getElementById('p_photo').style.display = 'block';
       document.getElementById('p_no_photo').style.display = 'none';
     };
-    reader1.readAsDataURL(photoInput.files[0]);
+    reader1.readAsDataURL(photoFile);
   } else {
-    document.getElementById('p_photo').style.display = 'none';
-    document.getElementById('p_no_photo').style.display = 'block';
+    if (document.getElementById('p_photo')) document.getElementById('p_photo').style.display = 'none';
+    if (document.getElementById('p_no_photo')) document.getElementById('p_no_photo').style.display = 'block';
   }
 
   const signInput = document.getElementById('signature');
-  if (signInput.files && signInput.files[0]) {
+  const signFile = signInput && signInput.files ? signInput.files.item(0) : null;
+  if (signFile) {
     const reader2 = new FileReader();
     reader2.onload = function(ev) {
       document.getElementById('p_sign').src = ev.target.result;
     };
-    reader2.readAsDataURL(signInput.files[0]);
+    reader2.readAsDataURL(signFile);
   }
 
   form.style.display = 'none';
   document.getElementById('receiptBox').style.display = 'block';
   document.getElementById('receiptBox').scrollIntoView({ behavior: 'smooth' });
 
-  if (DATABASE_WEB_APP_URL.startsWith('https://google.com')) {
+  if (DATABASE_WEB_APP_URL.includes('://google.com')) {
     try {
       await fetch(DATABASE_WEB_APP_URL, {
         method: 'POST',
@@ -280,6 +286,10 @@ form.addEventListener('submit', async function(e) {
     } catch (err) {}
   }
 });
+
+
+
+
 
 function editApplication() {
   document.getElementById('receiptBox').style.display = 'none';
