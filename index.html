@@ -181,9 +181,26 @@ function updateClassFee() {
 }
 
 function copyUPI() {
-  navigator.clipboard.writeText("jankalyansansthan@sbi");
-  alert("UPI ID कॉपी हो गई है! अब PhonePe या GPay में जाकर पेस्ट करें।");
+  const upiText = "jankalyansansthan@sbi";
+  const tempInput = document.createElement("input");
+  tempInput.value = upiText;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  tempInput.setSelectionRange(0, 99999);
+  try {
+    document.execCommand("copy");
+    alert("UPI ID कॉपी हो गई है: " + upiText);
+  } catch (err) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(upiText);
+      alert("UPI ID कॉपी हो गई है: " + upiText);
+    } else {
+      alert("कृपया इस UPI ID को दबाकर कॉपी करें: " + upiText);
+    }
+  }
+  document.body.removeChild(tempInput);
 }
+
 
 const DATABASE_WEB_APP_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
 const form = document.getElementById('applicationForm');
