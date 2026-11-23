@@ -244,7 +244,8 @@ form.addEventListener('submit', async function(e) {
     "पता: " + data.address + "\n" +
     "शुल्क: ₹" + data.fee + " | UTR: " + data.utr
   );
-  document.getElementById('waSendBtn').href = "https://wa.me" + waText;
+document.getElementById('waSendBtn').href = "https://wa.me/?text=" + waText;
+
 
   const photoInput = document.getElementById('studentPhoto');
   const photoFile = photoInput && photoInput.files ? photoInput.files.item(0) : null;
@@ -275,7 +276,8 @@ form.addEventListener('submit', async function(e) {
   document.getElementById('receiptBox').style.display = 'block';
   document.getElementById('receiptBox').scrollIntoView({ behavior: 'smooth' });
 
-  if (DATABASE_WEB_APP_URL.includes('://google.com')) {
+  if (DATABASE_WEB_APP_URL.includes('http')) {
+                                         
     try {
       await fetch(DATABASE_WEB_APP_URL, {
         method: 'POST',
