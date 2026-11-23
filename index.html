@@ -172,7 +172,7 @@ form{background:#fff;border:1px solid #dce4ef;border-radius:18px;padding:clamp(1
 </main>
 <footer><p><strong>जन कल्याण संस्थान</strong></p><p>रेहरा बाजार, बलरामपुर, उत्तर प्रदेश</p><p>पंजीकरण संख्या: BLR/01178/2025-26 | स्थापना वर्ष: 2025</p><p>© 2026 जन कल्याण संस्थान</p></footer>
 
-<script>
+  <script>
 function updateClassFee() {
   var sel = document.getElementById("class");
   var fee = sel.options[sel.selectedIndex].getAttribute("data-fee") || "0";
@@ -181,30 +181,110 @@ function updateClassFee() {
 }
 
 function copyUPI() {
-  const upiText = "jankalyansansthan@sbi";
-  const tempInput = document.createElement("input");
+  var upiText = "jankalyansansthan@sbi";
+  var tempInput = document.createElement("input");
   tempInput.value = upiText;
   document.body.appendChild(tempInput);
   tempInput.select();
   tempInput.setSelectionRange(0, 99999);
-  try {
-    document.execCommand("copy");
-    alert("UPI ID कॉपी हो गई है: " + upiText);
-  } catch (err) {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(upiText);
-      alert("UPI ID कॉपी हो गई है: " + upiText);
-    } else {
-      alert("कृपया इस UPI ID को दबाकर कॉपी करें: " + upiText);
-    }
-  }
+  document.execCommand("copy");
   document.body.removeChild(tempInput);
+  alert("UPI ID कॉपी हो गई है: " + upiText);
 }
-
 
 const DATABASE_WEB_APP_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
 const form = document.getElementById('applicationForm');
 
-form.addEventListener('submit', async (e) => {
+form.addEventListener('submit', async function(e) {
   e.preventDefault();
+  if (!form.reportValidity()) return;
+
+  const data = Object.fromEntries(new FormData(form).entries());
+  data.consent = 'हाँ';
+  data.submittedAt = new Date().toLocaleDateString('hi-IN');
+
+  document.getElementById('p_date').innerText = data.submittedAt;
+  document.getElementById('p_student').innerText = data.student;
+  document.getElementById('p_guardian').innerText = data.guardian;
+  document.getElementById('p_dob').innerText = data.dob;
+  document.getElementById('p_aadhaar').innerText = data.aadhaar;
+  document.getElementById('p_class').innerText = data.class;
+  document.getElementById('p_phone').innerText = data.phone;
+  document.getElementById('p_school').innerText = data.school;
+  document.getElementById('p_school_phone').innerText = data.school_phone;
+  document.getElementById('p_address').innerText = data.address;
+  document.getElementById('p_payment').innerText = "₹" + data.fee + " (UTR: " + data.utr + ")";
+
+  const waText = encodeURIComponent(
+    "जन कल्याण संस्थान — प्रतियोगिता आवेदन\n" +
+    "प्रतिभागी: " + data.student + "\n" +
+    "पिता/अभिभावक: " + data.guardian + "\n" +
+    "जन्म तिथि: " + data.dob + "\n" +
+    "आधार: " + data.aadhaar + "\n" +
+    "कक्षा: " + data.class + "\n" +
+    "मोबाइल: " + data.phone + "\n" +
+    "विद्यालय: " + data.school + " (" + data.school_phone + ")\n" +
+    "पता: " + data.address + "\n" +
+    "शुल्क: ₹" + data.fee + " | UTR: " + data.utr
+  );
+  document.getElementById('waSendBtn').href = "https://wa.me" + waText;
+
+  const photoInput = document.getElementById('studentPhoto');
+  if (photoInput.files && photoInput.files[0]) {
+    const reader1 = new FileReader();
+    reader1.onload = function(ev) {
+      document.getElementById('p_photo').src = ev.target.result;
+      document.getElementById('p_photo').style.display = 'block';
+      document.getElementById('p_no_photo').style.display = 'none';
+    };
+    reader1.readAsDataURL(photoInput.files[0]);
+  } else {
+    document.getElementById('p_photo').style.display = 'none';
+    document.getElementById('p_no_photo').style.display = 'block';
+  }
+
+  const signInput = document.getElementById('signature');
+  if (signInput.files && signInput.files[0]) {
+    const reader2 = new FileReader();
+    reader2.onload = function(ev) {
+      document.getElementById('p_sign').src = ev.target.result;
+    };
+    reader2.readAsDataURL(signInput.files[0]);
+  }
+
+  form.style.display = 'none';
+  document.getElementById('receiptBox').style.display = 'block';
+  document.getElementById('receiptBox').scrollIntoView({ behavior: 'smooth' });
+
+  if (DATABASE_WEB_APP_URL.startsWith('https://google.com')) {
+    try {
+      await fetch(DATABASE_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: new URLSearchParams(data).toString()
+      });
+    } catch (err) {}
+  }
+});
+
+function editApplication() {
+  document.getElementById('receiptBox').style.display = 'none';
+  form.style.display = 'grid';
+}
+
+function printApplication() {
+  const printContent = document.getElementById('printableArea').innerHTML;
+  const win = window.open('', '', 'height=750,width=850');
+  win.document.write('<html><head><title>आवेदन पत्र - जन कल्याण संस्थान</title>');
+  win.document.write('<style>body{font-family:Arial,sans-serif;padding:20px;} table{width:100%;border-collapse:collapse;} td{border:1px solid #333;padding:8px;}</style>');
+  win.document.write('</head><body>' + printContent + '</body></html>');
+  win.document.close();
+  win.focus();
+  setTimeout(function() { win.print(); }, 500);
+}
+</script>
+</body>
+</html>
+
 
