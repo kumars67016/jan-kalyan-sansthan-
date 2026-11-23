@@ -72,6 +72,8 @@ form{background:#fff;border:1px solid #dce4ef;border-radius:18px;padding:clamp(1
 <section><div class="wrap"><h2 class="title">प्रतियोगिता में भाग लेने के लाभ</h2><div class="steps"><div class="step"><strong>आत्मविश्वास</strong><p>बच्चों को अपनी योग्यता दिखाने और नए अनुभव प्राप्त करने का अवसर मिलता है।</p></div><div class="step"><strong>सोचने की क्षमता</strong><p>प्रश्नों के माध्यम से तर्क, स्मरण शक्ति और समस्या-समाधान कौशल का अभ्यास होता है।</p></div><div class="step"><strong>प्रतिभा का सम्मान</strong><p>आयोजक द्वारा घोषित नियमों के अनुसार विजेताओं को प्रमाण-पत्र एवं आकर्षक पुरस्कार दिए जाएंगे।</p></div></div></div></section>
  <section class="soft" id="apply"><div class="wrap">
   <h2 class="title">प्रतियोगिता ऑनलाइन आवेदन फ़ॉर्म</h2>
+  
+  <!-- आवेदन फॉर्म -->
   <form id="applicationForm" class="grid">
     <div class="field"><label for="student">प्रतिभागी का नाम (Student Name) *</label><input id="student" name="student" required placeholder="पूरा नाम लिखें"></div>
     <div class="field"><label for="guardian">पिता/अभिभावक का नाम *</label><input id="guardian" name="guardian" required placeholder="पिता का नाम लिखें"></div>
@@ -89,31 +91,86 @@ form{background:#fff;border:1px solid #dce4ef;border-radius:18px;padding:clamp(1
     <div class="field"><label for="school">विद्यालय का नाम (School Name) *</label><input id="school" name="school" required placeholder="विद्यालय का पूरा नाम"></div>
     <div class="field"><label for="school_phone">विद्यालय का संपर्क नंबर *</label><input id="school_phone" name="school_phone" type="tel" required pattern="[0-9]{10}" maxlength="10" placeholder="विद्यालय का 10 अंकों का नंबर"></div>
     <div class="field full"><label for="address">पूरा पता (Address) *</label><input id="address" name="address" required placeholder="गाँव/शहर, पोस्ट, जिला"></div>
-   <div class="field full">
-  <label for="studentPhoto">बच्चे की पासपोर्ट साइज़ फ़ोटो अपलोड करें (Passport Photo - Optional)</label>
-  <input type="file" id="studentPhoto" name="studentPhoto" accept="image/*">
-   </div>
-   
+    <div class="field full">
+      <label for="studentPhoto">बच्चे की पासपोर्ट साइज़ फ़ोटो अपलोड करें (Passport Photo - Optional)</label>
+      <input type="file" id="studentPhoto" name="studentPhoto" accept="image/*">
+    </div>
     <div class="field full"><label for="signature">बच्चे के हस्ताक्षर की फ़ोटो अपलोड करें (Signature Photo) *</label><input id="signature" name="signature" type="file" accept="image/*" required></div>
 
     <div class="field full" style="background:#e8f5e9; border:2px dashed #2e7d32; padding:15px; border-radius:10px; text-align:center;">
       <p style="margin:0; font-weight:bold; color:#1b5e20;">देय आवेदन शुल्क (Registration Fee):</p>
       <h2 id="feeText" style="margin:8px 0; color:#d32f2f; font-size:26px;">₹0 (पहले कक्षा चुनें)</h2>
       <p style="font-size:13px; margin:5px 0;">नीचे दिए गए <b>JAN KALYAN SANSTHAN</b> के SBI QR कोड को स्कैन करके फ़ीस जमा करें:</p>
-      <img src="IMG-20260809-WA0048.jpg" alt="SBI QR Code" style="width:200px; max-width:100%; border-radius:8px; margin:10px auto; display:block;"><div style="margin:12px auto; padding:10px; background:#fff; border:1px solid #ccc; border-radius:8px; max-width:300px; text-align:center;">
-  <p style="margin:0 0 5px 0; font-size:13px; color:#333;">QR स्कैन न हो, तो UPI ID कॉपी करके पेमेंट करें:</p>
-  <b style="color:#0056b3; font-size:15px;">jankalyansansthan@sbi</b><br>
-  <button type="button" onclick="copyUPI()" style="margin-top:8px; padding:6px 14px; background:#198754; color:#fff; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">UPI ID कॉपी करें</button>
+      <img src="IMG-20260809-WA0048.jpg" alt="SBI QR Code" style="width:200px; max-width:100%; border-radius:8px; margin:10px auto; display:block;">
+      <div style="margin:12px auto; padding:10px; background:#fff; border:1px solid #ccc; border-radius:8px; max-width:300px; text-align:center;">
+        <p style="margin:0 0 5px 0; font-size:13px; color:#333;">QR स्कैन न हो, तो UPI ID कॉपी करके पेमेंट करें:</p>
+        <b style="color:#0056b3; font-size:15px;">jankalyansansthan@sbi</b><br>
+        <button type="button" onclick="copyUPI()" style="margin-top:8px; padding:6px 14px; background:#198754; color:#fff; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">UPI ID कॉपी करें</button>
       </div>
-     
       <input type="hidden" id="feeAmount" name="fee" value="0">
     </div>
 
     <div class="field full"><label for="utr">पेमेंट का 12 अंकों का UTR / Transaction ID *</label><input id="utr" name="utr" required placeholder="पेमेंट के बाद मिला UTR नंबर यहाँ लिखें"></div>
-    <div class="field full"><button class="btn" type="submit">आवेदन जमा करें (Submit Form)</button></div>
-    <div class="field full"><div id="status" style="display:none;"></div></div>
+    <div class="field full"><button class="btn" type="submit">आवेदन जमा करें और फ़ॉर्म देखें (Submit & Preview)</button></div>
   </form>
+
+  <!-- भरा हुआ पूरा फॉर्म (डाउनलोड और प्रिंट के लिए) -->
+  <div id="receiptBox" style="display:none; background:#fff; border:2px solid #12305a; border-radius:12px; padding:22px; margin-top:25px; box-shadow:0 8px 24px rgba(0,0,0,0.12);">
+    <div id="printableArea">
+      <div style="text-align:center; border-bottom:2px solid #12305a; padding-bottom:12px; margin-bottom:18px;">
+        <img src="IMG-20260922-WA0045.jpg" alt="Logo" style="width:65px; height:65px; border-radius:50%; object-fit:cover;">
+        <h2 style="margin:5px 0 2px; color:#12305a; font-size:22px;">JAN KALYAN SANSTHAN (जन कल्याण संस्थान)</h2>
+        <p style="margin:0; font-size:13px; color:#444;">रेहरा बाजार, बलरामपुर, उत्तर प्रदेश | पंजीकरण संख्या: BLR/01178/2025-26</p>
+        <div style="display:inline-block; background:#12305a; color:#fff; padding:4px 14px; border-radius:20px; font-size:14px; font-weight:bold; margin-top:8px;">
+          मंडल स्तरीय मानसिक एवं बौद्धिक विकास प्रतियोगिता — आवेदन पत्र
+        </div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:15px;">
+        <table style="flex:1; min-width:260px; border-collapse:collapse; font-size:14px;" border="1" cellpadding="8">
+          <tr><td style="background:#f4f7fb; font-weight:bold; width:40%;">आवेदन तिथि</td><td id="p_date"></td></tr>
+          <tr><td style="background:#f4f7fb; font-weight:bold;">प्रतिभागी का नाम</td><td id="p_student" style="font-weight:bold; color:#12305a;"></td></tr>
+          <tr><td style="background:#f4f7fb; font-weight:bold;">पिता/अभिभावक का नाम</td><td id="p_guardian"></td></tr>
+          <tr><td style="background:#f4f7fb; font-weight:bold;">जन्म तिथि (DOB)</td><td id="p_dob"></td></tr>
+          <tr><td style="background:#f4f7fb; font-weight:bold;">आधार नंबर</td><td id="p_aadhaar"></td></tr>
+          <tr><td style="background:#f4f7fb; font-weight:bold;">कक्षा / वर्ग</td><td id="p_class"></td></tr>
+          <tr><td style="background:#f4f7fb; font-weight:bold;">मोबाइल नंबर</td><td id="p_phone"></td></tr>
+          <tr><td style="background:#f4f7fb; font-weight:bold;">विद्यालय का नाम</td><td id="p_school"></td></tr>
+          <tr><td style="background:#f4f7fb; font-weight:bold;">विद्यालय संपर्क</td><td id="p_school_phone"></td></tr>
+          <tr><td style="background:#f4f7fb; font-weight:bold;">पूरा पता</td><td id="p_address"></td></tr>
+          <tr><td style="background:#f4f7fb; font-weight:bold;">जमा शुल्क / UTR ID</td><td id="p_payment" style="color:#157347; font-weight:bold;"></td></tr>
+        </table>
+
+        <!-- फोटो और हस्ताक्षर बॉक्स -->
+        <div style="width:140px; display:flex; flex-direction:column; align-items:center; gap:12px; margin:auto;">
+          <div style="border:1px solid #333; width:125px; height:145px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#fafafa;">
+            <img id="p_photo" src="" alt="फ़ोटो संलग्न नहीं" style="width:100%; height:100%; object-fit:cover; display:none;">
+            <span id="p_no_photo" style="font-size:12px; color:#777; text-align:center; padding:5px;">पासपोर्ट फ़ोटो संलग्न नहीं</span>
+          </div>
+          <div style="border:1px solid #333; width:125px; height:50px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#fafafa;">
+            <img id="p_sign" src="" alt="हस्ताक्षर" style="max-width:100%; max-height:100%; object-fit:contain;">
+          </div>
+          <span style="font-size:12px; font-weight:bold;">प्रतिभागी के हस्ताक्षर</span>
+        </div>
+      </div>
+
+      <p style="margin-top:15px; font-size:12px; color:#555; border-top:1px dashed #ccc; padding-top:8px;">
+        <strong>नोट:</strong> परीक्षा तिथि 29 नवंबर 2026 को यह आवेदन पत्र एवं आधार कार्ड साथ लाना अनिवार्य है।
+      </p>
+    </div>
+
+    <!-- डाउनलोड, WhatsApp और एडिट बटन -->
+    <div style="text-align:center; margin-top:20px; display:flex; flex-wrap:wrap; justify-content:center; gap:10px;">
+      <button type="button" onclick="printApplication()" class="btn" style="background:#157347;">📥 फ़ॉर्म डाउनलोड / प्रिंट करें (PDF)</button>
+      <a id="waSendBtn" href="#" target="_blank" class="btn" style="background:#25D366; color:#fff;">📲 WhatsApp पर भेजें</a>
+      <button type="button" onclick="editApplication()" class="btn gold">✏️ जानकारी सुधारें (Edit)</button>
+    </div>
+  </div>
 </div></section>
+
+<section id="contact"><div class="wrap"><h2 class="title">संपर्क करें</h2><p class="lead">संस्था एवं प्रतियोगिता से संबंधित जानकारी</p><div class="contactGrid"><div class="contact"><h3>संस्था का पता</h3><p>जन कल्याण संस्थान<br>रेहरा बाजार, बलरामपुर<br>उत्तर प्रदेश, भारत</p></div><div class="contact"><h3>प्रबंधक एवं संपर्क</h3><p>प्रबंधक: सुरेश कुमार</p><p>फोन / WhatsApp: <a href="tel:+918726999460">8726 999 460</a></p><p><a href="https://wa.me" target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a></p></div></div></div></section>
+</main>
+<footer><p><strong>जन कल्याण संस्थान</strong></p><p>रेहरा बाजार, बलरामपुर, उत्तर प्रदेश</p><p>पंजीकरण संख्या: BLR/01178/2025-26 | स्थापना वर्ष: 2025</p><p>© 2026 जन कल्याण संस्थान</p></footer>
 
 <script>
 function updateClassFee() {
@@ -122,31 +179,15 @@ function updateClassFee() {
   document.getElementById("feeText").innerText = fee === "0" ? "₹0 (पहले कक्षा चुनें)" : "₹" + fee;
   document.getElementById("feeAmount").value = fee;
 }
-   function copyUPI() {
+
+function copyUPI() {
   navigator.clipboard.writeText("jankalyansansthan@sbi");
   alert("UPI ID कॉपी हो गई है! अब PhonePe या GPay में जाकर पेस्ट करें।");
- }
-</script>
- 
-<section id="contact"><div class="wrap"><h2 class="title">संपर्क करें</h2><p class="lead">संस्था एवं प्रतियोगिता से संबंधित जानकारी</p><div class="contactGrid"><div class="contact"><h3>संस्था का पता</h3><p>जन कल्याण संस्थान<br>रेहरा बाजार, बलरामपुर<br>उत्तर प्रदेश, भारत</p></div><div class="contact"><h3>प्रबंधक एवं संपर्क</h3><p>प्रबंधक: सुरेश कुमार</p><p>फोन / WhatsApp: <a href="tel:+918726999460">8726 999 460</a></p><p><a href="https://wa.me/918726999460" target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a></p></div></div></div></section>
-</main><footer><p><strong>जन कल्याण संस्थान</strong></p><p>रेहरा बाजार, बलरामपुर, उत्तर प्रदेश</p><p>पंजीकरण संख्या: BLR/01178/2025-26 | स्थापना वर्ष: 2025</p><p>© 2026 जन कल्याण संस्थान</p></footer>
-<script>
-// डेटाबेस कनेक्शन के लिए Google Apps Script Web App URL यहाँ पेस्ट करें।
+}
+
 const DATABASE_WEB_APP_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
-const form=document.getElementById('applicationForm');
-form.addEventListener('submit', async (e)=>{
- e.preventDefault(); if(!form.reportValidity()) return;
- const data=Object.fromEntries(new FormData(form).entries());
- data.consent='हाँ'; data.submittedAt=new Date().toISOString();
- const lines=['जन कल्याण संस्थान — प्रतियोगिता आवेदन','प्रतियोगिता: मंडल स्तरीय मानसिक एवं बौद्धिक विकास प्रतियोगिता','तिथि: 15 नवंबर 2026','पंजीकरण संख्या: BLR/01178/2025-26','--- विद्यार्थी विवरण ---',
- 'विद्यार्थी: '+data.student,'जन्म तिथि: '+data.dob,'कक्षा: '+data.class,'विद्यालय: '+data.school,'अभिभावक: '+data.guardian,'मोबाइल: '+data.phone,'पता: '+data.address,'जिला: '+data.district,'ईमेल: '+(data.email||'नहीं दिया गया'),'अतिरिक्त जानकारी: '+(data.notes||'नहीं'),'अभिभावक की सहमति: हाँ'];
- const status=document.getElementById('status'); status.style.display='block';
- if(DATABASE_WEB_APP_URL.startsWith('https://script.google.com/')){
-   try {
-     await fetch(DATABASE_WEB_APP_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:new URLSearchParams(data).toString()});
-     status.textContent='डेटाबेस को आवेदन भेजने का अनुरोध किया गया है। ब्राउज़र से अंतिम सेविंग की पुष्टि उपलब्ध नहीं है; कृपया WhatsApp संदेश भी भेजें।';
-   } catch(err) { status.textContent='डेटाबेस कनेक्शन उपलब्ध नहीं हुआ। WhatsApp से आवेदन भेजें।'; }
- } else { status.textContent='डेटाबेस अभी कनेक्ट नहीं है। आवेदन का संदेश WhatsApp में खुलेगा।'; }
- window.open('https://wa.me/918726999460?text='+encodeURIComponent(lines.join('\n')),'_blank','noopener');
-});
-</script></body></html>
+const form = document.getElementById('applicationForm');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
