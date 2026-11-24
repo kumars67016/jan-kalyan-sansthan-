@@ -417,11 +417,11 @@ async function checkPortal(type) {
       ? `<img src="${d.sign}" style="width:100px; height:35px; object-fit:contain; border:1px solid #333; margin-top:5px;">`
       : `<div style="width:100px; height:35px; border:1px solid #333; margin-top:5px; font-size:10px; display:flex; align-items:center; justify-content:center; color:#666;">हस्ताक्षर नहीं</div>`;
 
-    out.innerHTML = `
-      <div id="portalCardPrint" style="border:2px solid #12305a; border-radius:10px; padding:16px; background:#fff; margin-top:12px;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;">
+        out.innerHTML = `
+      <div id="portalCardPrint" style="border:2px solid #12305a; padding:16px; border-radius:8px; background:#fff; color:#000; font-family:Arial, sans-serif;">
+        <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
           <div style="flex:1; min-width:220px; font-size:14px; line-height:1.8;">
-            <h3 style="margin:0 0 8px; color:#12305a;">जन कल्याण संस्थान — ${type === 'admit' ? 'प्रवेश पत्र (Admit Card)' : 'आवेदन विवरण'}</h3>
+            <h3 style="margin:0 0 10px; color:#12305a; border-bottom:1px solid #ccc; padding-bottom:4px;">जन कल्याण संस्थान — प्रवेश पत्र (Admit Card)</h3>
             <div><b>रोल नंबर:</b> ${d.roll || 'JKS-' + (d.aadhaar ? d.aadhaar.slice(-4) : '0000')}</div>
             <div><b>नाम:</b> ${d.name || '-'}</div>
             <div><b>पिता/अभिभावक:</b> ${d.guardian || '-'}</div>
@@ -430,21 +430,37 @@ async function checkPortal(type) {
             <div><b>मोबाइल:</b> ${d.phone || '-'}</div>
             <div><b>विद्यालय:</b> ${d.school || '-'}</div>
           </div>
-          <div style="display:flex; flex-direction:column; align-items:center;">
+          <div style="display:flex; flex-direction:column; gap:6px; align-items:center;">
             ${photoHtml}
             ${signHtml}
           </div>
         </div>
-        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:20px; padding-top:10px; border-top:1px dashed #aaa; font-size:12px;">
-          <div>परीक्षा केंद्र: <b>मेरी बस्ती, बदायूं (उ.प्र.)</b></div>
-          <div style="text-align:center;">
-            <div style="font-weight:bold; color:#12305a;">प्रबंधक / सचिव</div>
-            <div>जन कल्याण संस्थान</div>
+
+        <!-- परीक्षा तिथि, परीक्षा केंद्र (खाली जगह) और गोल मुहर -->
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:20px; padding-top:12px; border-top:1px dashed #888; flex-wrap:wrap; gap:15px;">
+          
+          <!-- बाईं तरफ: परीक्षा तिथि और केंद्र लिखने की खाली जगह -->
+          <div style="font-size:14px; line-height:2.2; flex:1; min-width:220px;">
+            <div><b>परीक्षा तिथि:</b> ....................................................</div>
+            <div><b>परीक्षा केंद्र:</b> ........................................................................</div>
           </div>
+
+          <!-- दाईं तरफ: संस्था प्रबंधक की गोल मुहर और हस्ताक्षर -->
+          <div style="text-align:center; min-width:140px;">
+            <div style="width:92px; height:92px; border:2px double #12305a; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#12305a; font-weight:bold; font-size:10px; transform:rotate(-10deg); margin:0 auto 6px auto; line-height:1.2;">
+              <span>जन कल्याण संस्थान</span>
+              <span style="font-size:9px; border-top:1px solid #12305a; border-bottom:1px solid #12305a; margin:3px 0; padding:1px 4px;">प्रबंधक / सचिव</span>
+              <span style="font-size:9px;">उ.प्र. (भारत)</span>
+            </div>
+            <div style="font-weight:bold; color:#12305a; font-size:13px;">प्रबंधक / सचिव</div>
+            <div style="font-size:12px;">जन कल्याण संस्थान</div>
+          </div>
+
         </div>
       </div>
-      <button type="button" class="btn" style="margin-top:10px;" onclick="printPortalCard('portalCardPrint', '${type === 'admit' ? 'प्रवेश पत्र' : 'आवेदन विवरण'}')">प्रिंट / PDF डाउनलोड करें</button>
+      <button type="button" class="btn" style="margin-top:14px;" onclick="printPortalCard('portalCardPrint', 'Admit Card')">प्रवेश पत्र प्रिंट / डाउनलोड करें</button>
     `;
+
   }
 </script>
 </body>
