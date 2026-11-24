@@ -232,17 +232,22 @@ form.addEventListener('submit', async function(e) {
   data.consent = 'हाँ';
   data.submittedAt = new Date().toLocaleDateString('hi-IN');
 
-  document.getElementById('p_date').innerText = data.submittedAt;
-  document.getElementById('p_student').innerText = data.student;
-  document.getElementById('p_guardian').innerText = data.guardian;
-  document.getElementById('p_dob').innerText = data.dob;
-  document.getElementById('p_aadhaar').innerText = data.aadhaar;
-  document.getElementById('p_class').innerText = data.class;
-  document.getElementById('p_phone').innerText = data.phone;
-  document.getElementById('p_school').innerText = data.school;
-  document.getElementById('p_school_phone').innerText = data.school_phone;
-  document.getElementById('p_address').innerText = data.address;
-  document.getElementById('p_payment').innerText = "₹" + data.fee + " (UTR: " + data.utr + ")";
+  const setVal = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = text || '';
+  };
+
+  setVal('p_date', data.submittedAt);
+  setVal('p_student', data.student);
+  setVal('p_guardian', data.guardian);
+  setVal('p_dob', data.dob);
+  setVal('p_aadhaar', data.aadhaar);
+  setVal('p_class', data.class);
+  setVal('p_phone', data.phone);
+  setVal('p_school', data.school);
+  setVal('p_school_phone', data.school_phone);
+  setVal('p_address', data.address);
+  setVal('p_payment', "₹" + (data.fee || '0') + " (UTR: " + (data.utr || '') + ")");
 
   const waText = encodeURIComponent(
     "जन कल्याण संस्थान — प्रतियोगिता आवेदन\n" +
@@ -254,9 +259,12 @@ form.addEventListener('submit', async function(e) {
     "मोबाइल: " + data.phone + "\n" +
     "विद्यालय: " + data.school + " (" + data.school_phone + ")\n" +
     "पता: " + data.address + "\n" +
-    "शुल्क: ₹" + data.fee + " | UTR: " + data.utr
+    "शुल्क: ₹" + (data.fee || '0') + " | UTR: " + data.utr
   );
-document.getElementById('waSendBtn').href = "https://wa.me/?text=" + waText;
+
+  const waBtn = document.getElementById('waSendBtn');
+  if (waBtn) waBtn.href = "https://wa.me/?text=" + waText;
+
 
 
   const photoInput = document.getElementById('studentPhoto');
