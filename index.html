@@ -417,7 +417,7 @@ async function checkPortal(type) {
       ? `<img src="${d.sign}" style="width:100px; height:35px; object-fit:contain; border:1px solid #333; margin-top:5px;">`
       : `<div style="width:100px; height:35px; border:1px solid #333; margin-top:5px; font-size:10px; display:flex; align-items:center; justify-content:center; color:#666;">हस्ताक्षर नहीं</div>`;
 
-        out.innerHTML = `
+            out.innerHTML = `
       <div id="portalCardPrint" style="border:2px solid #12305a; padding:16px; border-radius:8px; background:#fff; color:#000; font-family:Arial, sans-serif;">
         <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
           <div style="flex:1; min-width:220px; font-size:14px; line-height:1.8;">
@@ -436,13 +436,21 @@ async function checkPortal(type) {
           </div>
         </div>
 
-        <!-- परीक्षा तिथि, परीक्षा केंद्र (खाली जगह) और गोल मुहर -->
-        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:20px; padding-top:12px; border-top:1px dashed #888; flex-wrap:wrap; gap:15px;">
+        <!-- ऑनलाइन भरने योग्य परीक्षा तिथि और परीक्षा केंद्र के कॉलम + गोल मुहर -->
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:16px; padding-top:12px; border-top:1px dashed #888; flex-wrap:wrap; gap:15px;">
           
-          <!-- बाईं तरफ: परीक्षा तिथि और केंद्र लिखने की खाली जगह -->
-          <div style="font-size:14px; line-height:2.2; flex:1; min-width:220px;">
-            <div><b>परीक्षा तिथि:</b> ....................................................</div>
-            <div><b>परीक्षा केंद्र:</b> ........................................................................</div>
+          <!-- बाईं तरफ: सीधे स्क्रीन पर टाइप करने वाले बॉक्स -->
+          <div style="flex:1; min-width:240px;">
+            <table style="width:100%; border-collapse:collapse; font-size:13px;">
+              <tr>
+                <td style="width:38%; background:#f4f7fb; font-weight:bold; padding:8px; border:1px solid #12305a;">परीक्षा तिथि :</td>
+                <td contenteditable="true" style="width:62%; padding:8px; border:1px solid #12305a; background:#fffef0; font-weight:bold; color:#000; outline:none;" title="यहाँ क्लिक करके परीक्षा तिथि लिखें">${d.examDate || ''}</td>
+              </tr>
+              <tr>
+                <td style="width:38%; background:#f4f7fb; font-weight:bold; padding:8px; border:1px solid #12305a;">परीक्षा केंद्र :</td>
+                <td contenteditable="true" style="width:62%; padding:8px; border:1px solid #12305a; background:#fffef0; font-weight:bold; color:#000; outline:none; min-height:30px;" title="यहाँ क्लिक करके परीक्षा केंद्र लिखें">${d.examCenter || ''}</td>
+              </tr>
+            </table>
           </div>
 
           <!-- दाईं तरफ: संस्था प्रबंधक की गोल मुहर और हस्ताक्षर -->
@@ -457,9 +465,16 @@ async function checkPortal(type) {
           </div>
 
         </div>
+
+        <!-- अनिवार्य नोट -->
+        <p style="margin:12px 0 0 0; font-size:12px; color:#333; border-top:1px solid #ddd; padding-top:6px;">
+          <strong>नोट:</strong> परीक्षा के दिन अपने साथ एडमिट कार्ड और आधार कार्ड लाना अनिवार्य है।
+        </p>
       </div>
-      <button type="button" class="btn" style="margin-top:14px;" onclick="printPortalCard('portalCardPrint', 'Admit Card')">प्रवेश पत्र प्रिंट / डाउनलोड करें</button>
+      <p style="font-size:11px; color:#555; margin-top:6px;">* प्रिंट करने से पहले ऊपर पीले बॉक्स में क्लिक करके परीक्षा तिथि और परीक्षा केंद्र लिख सकते हैं।</p>
+      <button type="button" class="btn" style="margin-top:8px;" onclick="printPortalCard('portalCardPrint', 'Admit Card')">प्रवेश पत्र प्रिंट / डाउनलोड करें</button>
     `;
+
 
   }
 </script>
