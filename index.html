@@ -264,22 +264,30 @@ form.addEventListener('submit', async function(e) {
 
   const waBtn = document.getElementById('waSendBtn');
   if (waBtn) waBtn.href = "https://wa.me/?text=" + waText;
-
-
+  let savedPhotoData = "";
+  let savedSignData = "";
 
   const photoInput = document.getElementById('studentPhoto');
   const photoFile = photoInput && photoInput.files ? photoInput.files.item(0) : null;
   if (photoFile) {
     const reader1 = new FileReader();
     reader1.onload = function(ev) {
-      document.getElementById('p_photo').src = ev.target.result;
-      document.getElementById('p_photo').style.display = 'block';
-      document.getElementById('p_no_photo').style.display = 'none';
+      savedPhotoData = ev.target.result;
+      const pPhoto = document.getElementById('p_photo');
+      const pNoPhoto = document.getElementById('p_no_photo');
+      if (pPhoto) {
+        pPhoto.src = savedPhotoData;
+        pPhoto.style.display = 'block';
+      }
+      if (pNoPhoto) pNoPhoto.style.display = 'none';
+      saveLocalStudent(data, savedPhotoData, savedSignData);
     };
     reader1.readAsDataURL(photoFile);
   } else {
-    if (document.getElementById('p_photo')) document.getElementById('p_photo').style.display = 'none';
-    if (document.getElementById('p_no_photo')) document.getElementById('p_no_photo').style.display = 'block';
+    const pPhoto = document.getElementById('p_photo');
+    const pNoPhoto = document.getElementById('p_no_photo');
+    if (pPhoto) pPhoto.style.display = 'none';
+    if (pNoPhoto) pNoPhoto.style.display = 'block';
   }
 
   const signInput = document.getElementById('signature');
@@ -287,17 +295,24 @@ form.addEventListener('submit', async function(e) {
   if (signFile) {
     const reader2 = new FileReader();
     reader2.onload = function(ev) {
-      document.getElementById('p_sign').src = ev.target.result;
+      savedSignData = ev.target.result;
+      const pSign = document.getElementById('p_sign');
+      if (pSign) pSign.src = savedSignData;
+      saveLocalStudent(data, savedPhotoData, savedSignData);
     };
     reader2.readAsDataURL(signFile);
   }
 
+  saveLocalStudent(data, savedPhotoData, savedSignData);
+
   form.style.display = 'none';
-  document.getElementById('receiptBox').style.display = 'block';
-  document.getElementById('receiptBox').scrollIntoView({ behavior: 'smooth' });
+  const receiptBox = document.getElementById('receiptBox');
+  if (receiptBox) {
+    receiptBox.style.display = 'block';
+    receiptBox.scrollIntoView({ behavior: 'smooth' });
+  }
 
   if (DATABASE_WEB_APP_URL.includes('http')) {
-                                         
     try {
       await fetch(DATABASE_WEB_APP_URL, {
         method: 'POST',
@@ -309,17 +324,37 @@ form.addEventListener('submit', async function(e) {
   }
 });
 
-  
-
-
-
+function saveLocalStudent(data, photo, sign) {
+  try {
+    const all = JSON.parse(localStorage.getItem('jks_students') || '{}');
+    const rec = {
+      found: true,
+      roll: "JKS-" + (data.aadhaar ? data.aadhaar.slice(-4) : Math.floor(1000 + Math.random() * 9000)),
+      name: data.student,
+      guardian: data.guardian,
+      dob: data.dob,
+      aadhaar: data.aadhaar,
+      cls: data.class,
+      phone: data.phone,
+      school: data.school,
+      address: data.address,
+      center: "रेहरा बाजार, बलरामपुर (उ.प्र.)",
+      photo: photo || (all[data.aadhaar] && all[data.aadhaar].photo) || "",
+      sign: sign || (all[data.aadhaar] && all[data.aadhaar].sign) || ""
+    };
+    if (data.aadhaar) all[data.aadhaar] = rec;
+    if (data.phone) all[data.phone] = rec;
+    localStorage.setItem('jks_students', JSON.stringify(all));
+  } catch (e) {}
+}
 
 function editApplication() {
   document.getElementById('receiptBox').style.display = 'none';
   form.style.display = 'grid';
 }
+
 function sendToWhatsApp() {
-  var msg = "जन कल्याण संस्थान — प्रतियोगिता आवेदन\n" +
+  var msg = "जन कल्याण संस्थान — प्रतियोगिता आवेदन एवं प्रवेश पत्र\n" +
     "प्रतिभागी: " + document.getElementById('p_student').innerText + "\n" +
     "पिता/अभिभावक: " + document.getElementById('p_guardian').innerText + "\n" +
     "जन्म तिथि: " + document.getElementById('p_dob').innerText + "\n" +
@@ -328,12 +363,13 @@ function sendToWhatsApp() {
     "मोबाइल: " + document.getElementById('p_phone').innerText + "\n" +
     "विद्यालय: " + document.getElementById('p_school').innerText + "\n" +
     "पता: " + document.getElementById('p_address').innerText + "\n" +
-    "शुल्क/UTR: " + document.getElementById('p_payment').innerText;
+    "शुल्क/UTR: " + document.getElementById('p_payment').innerText + "\n\n" +
+    "फ़ोटो सहित प्रवेश पत्र (Admit Card) डाउनलोड करने के लिए नीचे दिए लिंक पर जाकर अपना आधार या मोबाइल नंबर दर्ज करें:\n" +
+    window.location.href.split('#') + "#portal";
 
-    window.location.href = "https://wa.me/918726999460?text=" + encodeURIComponent(msg);
-  
+  window.open("https://wa.me" + encodeURIComponent(msg), "_blank");
 }
-    
+
 function printApplication() {
   const printContent = document.getElementById('printableArea').innerHTML;
   const win = window.open('', '', 'height=750,width=850');
@@ -343,25 +379,84 @@ function printApplication() {
   win.document.close();
   win.focus();
   setTimeout(function() { win.print(); }, 500);
-}async function checkPortal(type) {
+}
+
+function printPortalCard(elementId, title) {
+  const content = document.getElementById(elementId).innerHTML;
+  const win = window.open('', '', 'height=750,width=850');
+  win.document.write('<html><head><title>' + title + ' - जन कल्याण संस्थान</title>');
+  win.document.write('<style>body{font-family:Arial,sans-serif;padding:20px;} table{width:100%;border-collapse:collapse;} td,th{border:1px solid #333;padding:8px;text-align:left;}</style>');
+  win.document.write('</head><body>' + content + '</body></html>');
+  win.document.close();
+  win.focus();
+  setTimeout(function() { win.print(); }, 500);
+}
+
+async function checkPortal(type) {
   const id = document.getElementById('searchId').value.trim();
   const out = document.getElementById('portalOutput');
   if (!id) { out.innerHTML = "<p style='color:red;'>कृपया आधार या मोबाइल नंबर लिखें।</p>"; return; }
   out.innerHTML = "<p>खोजा जा रहा है...</p>";
+
+  let d = null;
   try {
     const res = await fetch(DATABASE_WEB_APP_URL + "?id=" + encodeURIComponent(id));
-    const d = await res.json();
-    if (!d.found) { out.innerHTML = "<p style='color:red;'>कोई रिकॉर्ड नहीं मिला।</p>"; return; }
-    
-    const managerSign = `<div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:25px; padding-top:10px; border-top:1px dashed #ccc; font-size:13px;"><div><b>दिनांक:</b> 29/11/2026<br><b>स्थान:</b> रेहरा बाजार</div><div style="text-align:center;"><img src="manager_sign.png" style="max-height:40px; display:block; margin:auto;" onerror="this.style.display='none'"><div style="border-top:1px solid #333; padding-top:3px; font-weight:bold; color:#12305a;">प्रबंधक हस्ताक्षर<br>(सुरेश कुमार)</div></div></div>`;
+    const json = await res.json();
+    if (json && json.found) d = json;
+  } catch (e) {}
 
-    if (type === 'admit') {
-      out.innerHTML = `<div style="border:2px solid #12305a; padding:18px; border-radius:10px; background:#fff;"><h3 style="margin:0; color:#12305a; text-align:center;">जन कल्याण संस्थान — प्रवेश पत्र</h3><hr><p><b>रोल नंबर:</b> ${d.roll}<br><b>नाम:</b> ${d.name}<br><b>पिता:</b> ${d.guardian}<br><b>कक्षा:</b> ${d.cls}<br><b>विद्यालय:</b> ${d.school}<br><b>परीक्षा केंद्र:</b> ${d.center}<br><b>तिथि:</b> 29 नवंबर 2026</p>${managerSign}</div><button class="btn" style="margin-top:10px; width:100%;" onclick="window.print()">🖨️ प्रिंट करें</button>`;
-    } else {
-      out.innerHTML = `<div style="border:3px double #157347; padding:18px; border-radius:10px; background:#fff;"><h3 style="margin:0; color:#157347; text-align:center;">जन कल्याण संस्थान — अंक पत्र (Marksheet)</h3><hr><p><b>रोल नंबर:</b> ${d.roll}<br><b>नाम:</b> ${d.name}<br><b>पिता:</b> ${d.guardian}<br><b>कक्षा:</b> ${d.cls}<br><b>परिणाम:</b> ${d.result || "अभी घोषित नहीं हुआ है"}</p>${managerSign}</div><button class="btn" style="margin-top:10px; width:100%;" onclick="window.print()">🖨️ मार्कशीट प्रिंट करें</button>`;
-    }
-  } catch (e) { out.innerHTML = "<p style='color:red;'>लिंक की जांच करें।</p>"; }
-}
+  if (!d) {
+    try {
+      const localAll = JSON.parse(localStorage.getItem('jks_students') || '{}');
+      if (localAll[id]) d = localAll[id];
+    } catch (e) {}
+  }
+
+  if (!d || !d.found) {
+    out.innerHTML = "<p style='color:red;'>कोई रिकॉर्ड नहीं मिला। कृपया सही आधार या मोबाइल नंबर डालें (या सुनिश्चित करें कि Google Sheet में विवरण दर्ज है)।</p>";
+    return;
+  }
+
+  const photoHtml = d.photo
+    ? `<img src="${d.photo}" style="width:100px; height:120px; object-fit:cover; border:1px solid #333; border-radius:4px;">`
+    : `<div style="width:100px; height:120px; border:1px solid #333; display:flex; align-items:center; justify-content:center; font-size:11px; color:#666;">पासपोर्ट फ़ोटो</div>`;
+
+  const signHtml = d.sign
+    ? `<img src="${d.sign}" style="width:100px; height:35px; object-fit:contain; border:1px solid #333; margin-top:5px;">`
+    : `<div style="width:100px; height:35px; border:1px solid #333; margin-top:5px; font-size:10px; display:flex; align-items:center; justify-content:center; color:#666;">प्रतिभागी हस्ताक्षर</div>`;
+
+  const managerSign = `<div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:25px; padding-top:10px; border-top:1px dashed #ccc; font-size:13px;"><div><b>परीक्षा तिथि:</b> 29 नवंबर 2026<br><b>परीक्षा केंद्र:</b> ${d.center || "रेहरा बाजार, बलरामपुर"}</div><div style="text-align:center;"><img src="manager_sign.png" style="max-height:40px; display:block; margin:auto;" onerror="this.style.display='none'"><div style="border-top:1px solid #333; padding-top:3px; font-weight:bold; color:#12305a;">प्रबंधक हस्ताक्षर<br>(सुरेश कुमार)</div></div></div>`;
+
+  if (type === 'admit') {
+    out.innerHTML = `
+      <div id="admitPrintBox" style="border:2px solid #12305a; padding:18px; border-radius:10px; background:#fff;">
+        <div style="text-align:center; border-bottom:2px solid #12305a; padding-bottom:10px; margin-bottom:12px;">
+          <h3 style="margin:0; color:#12305a;">JAN KALYAN SANSTHAN (जन कल्याण संस्थान)</h3>
+          <p style="margin:3px 0; font-size:12px;">रेहरा बाजार, बलरामपुर, उत्तर प्रदेश | पंजीकरण संख्या: BLR/01178/2025-26</p>
+          <span style="background:#12305a; color:#fff; padding:4px 12px; border-radius:15px; font-size:13px; font-weight:bold;">प्रवेश पत्र (ADMIT CARD) — 2026</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start;">
+          <table style="width:100%; border-collapse:collapse; font-size:14px;">
+            <tr><td style="padding:5px; border:1px solid #ddd;"><b>रोल नंबर:</b></td><td style="padding:5px; border:1px solid #ddd; color:#b00020; font-weight:bold;">${d.roll || 'JKS-2026'}</td></tr>
+            <tr><td style="padding:5px; border:1px solid #ddd;"><b>प्रतिभागी का नाम:</b></td><td style="padding:5px; border:1px solid #ddd;">${d.name || ''}</td></tr>
+            <tr><td style="padding:5px; border:1px solid #ddd;"><b>पिता/अभिभावक:</b></td><td style="padding:5px; border:1px solid #ddd;">${d.guardian || ''}</td></tr>
+            <tr><td style="padding:5px; border:1px solid #ddd;"><b>आधार नंबर:</b></td><td style="padding:5px; border:1px solid #ddd;">${d.aadhaar || id}</td></tr>
+            <tr><td style="padding:5px; border:1px solid #ddd;"><b>कक्षा / वर्ग:</b></td><td style="padding:5px; border:1px solid #ddd;">${d.cls || ''}</td></tr>
+            <tr><td style="padding:5px; border:1px solid #ddd;"><b>विद्यालय:</b></td><td style="padding:5px; border:1px solid #ddd;">${d.school || ''}</td></tr>
+          </table>
+          <div style="text-align:center; flex-shrink:0;">
+            ${photoHtml}
+            ${signHtml}
+          </div>
+        </div>
+        <p style="font-size:12px; color:#444; margin-top:10px;"><b>निर्देश:</b> परीक्षा केंद्र पर इस प्रवेश पत्र के साथ मूल आधार कार्ड लाना अनिवार्य है।</p>
+        ${managerSign}
+      </div>
+      <button type="button" class="btn" style="margin-top:10px; width:100%; background:#157347; color:#fff;" onclick="printPortalCard('admitPrintBox', 'प्रवेश पत्र')">🖨️ एडमिट कार्ड डाउनलोड / प्रिंट करें (PDF)</button>`;
+  } else {
+    out.innerHTML = `
+      <div id="marksheetPrintBox" style="border:3px double #157347; padding:18px; border-radius:10px; background:#fff;">
+
 
 </script>
 </body>
