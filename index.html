@@ -358,8 +358,13 @@ function sendToWhatsApp() {
     "पता: " + document.getElementById('p_address').innerText + "\n" +
     "शुल्क/UTR: " + document.getElementById('p_payment').innerText;
 
-  window.open("https://wa.me" + encodeURIComponent(msg), "_blank");
-}
+          if (navigator.share) {
+      navigator.share({ title: 'जन कल्याण संस्थान', text: msg });
+    } else {
+      alert("मैसेज कॉपी करें:\n\n" + msg);
+    }
+  }
+
 
 function printApplication() {
   const printContent = document.getElementById('printableArea').innerHTML;
@@ -416,7 +421,10 @@ async function checkPortal(type) {
     const signHtml = d.sign
       ? `<img src="${d.sign}" style="width:100px; height:35px; object-fit:contain; border:1px solid #333; margin-top:5px;">`
       : `<div style="width:100px; height:35px; border:1px solid #333; margin-top:5px; font-size:10px; display:flex; align-items:center; justify-content:center; color:#666;">हस्ताक्षर नहीं</div>`;
+  
+if (type === 'result') { out.innerHTML = `<div style="border:2px solid #12305a; padding:16px; border-radius:8px; background:#fff;"><h3>जन कल्याण संस्थान — परीक्षा परिणाम</h3><p><b>नाम:</b> ${d.name || '-'} | <b>रोल नंबर:</b> ${d.roll || '-'}</p><p><b>प्राप्तांक:</b> <span contenteditable="true" style="background:#fffef0; padding:2px 8px; border:1px solid #ccc;">${d.marks || 'यहाँ लिखें'}</span> | <b>परिणाम:</b> <span contenteditable="true" style="background:#fffef0; padding:2px 8px; border:1px solid #ccc;">${d.result || 'उत्तीर्ण'}</span></p></div>`; return; }
 
+ 
             out.innerHTML = `
       <div id="portalCardPrint" style="border:2px solid #12305a; padding:16px; border-radius:8px; background:#fff; color:#000; font-family:Arial, sans-serif;">
         <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
