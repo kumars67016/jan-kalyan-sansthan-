@@ -210,8 +210,15 @@ function copyUPI() {
   tempInput.select();
   tempInput.setSelectionRange(0, 99999);
   document.execCommand("copy");
-  document.body.removeChild(tempInput);
+    document.body.removeChild(tempInput);
   alert("UPI ID कॉपी हो गई है: " + upiText);
+}
+
+
+
+
+
+
 
   const DATABASE_WEB_APP_URL ="https://script.google.com/macros/s/AKfycbxptIlM7qzaxxKLdQyJ5jYGqpd0mqWMy_r3RZ-v5YYOtazumsIVmgQOKMP11irw8oFV/exec";
   
