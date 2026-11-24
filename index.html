@@ -186,12 +186,21 @@ form{background:#fff;border:1px solid #dce4ef;border-radius:18px;padding:clamp(1
 <footer><p><strong>जन कल्याण संस्थान</strong></p><p>रेहरा बाजार, बलरामपुर, उत्तर प्रदेश</p><p>पंजीकरण संख्या: BLR/01178/2025-26 | स्थापना वर्ष: 2025</p><p>© 2026 जन कल्याण संस्थान</p></footer>
 
   <script>
-function updateClassFee() {
-  var sel = document.getElementById("class");
-  var fee = sel.options[sel.selectedIndex].getAttribute("data-fee") || "0";
-  document.getElementById("feeText").innerText = fee === "0" ? "₹0 (पहले कक्षा चुनें)" : "₹" + fee;
-  document.getElementById("feeAmount").value = fee;
+    function updateClassFee() {
+  const select = document.getElementById('class');
+  const selectedOption = select.options[select.selectedIndex];
+  const fee = selectedOption.getAttribute('data-fee') || "0";
+  const feeText = document.getElementById('feeText');
+  const feeInput = document.getElementById('fee') || document.getElementById('feeAmount');
+
+  if (feeText) {
+    feeText.innerText = fee === "0" ? "₹0 (पहले कक्षा चुनें)" : "₹" + fee;
+  }
+  if (feeInput) {
+    feeInput.value = fee;
+  }
 }
+
 
 function copyUPI() {
   var upiText = "jankalyansansthan@sbi";
@@ -285,6 +294,7 @@ document.getElementById('waSendBtn').href = "https://wa.me/?text=" + waText;
   }
 });
 
+  
 
 
 
