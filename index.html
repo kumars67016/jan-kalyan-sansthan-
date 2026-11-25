@@ -432,7 +432,8 @@ if (type === 'result') { out.innerHTML = `<div style="border:2px solid #12305a; 
         <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
           <div style="flex:1; min-width:220px; font-size:14px; line-height:1.8;">
             <h3 style="margin:0 0 10px; color:#12305a; border-bottom:1px solid #ccc; padding-bottom:4px;">जन कल्याण संस्थान — प्रवेश पत्र (Admit Card)</h3>
-            <div><b>रोल नंबर:</b> ${d.roll || 'JKS-' + (d.aadhaar ? d.aadhaar.slice(-4) : '0000')}</div>
+            <div><b>रोल नंबर:</b> <span contenteditable="true" style="background:#fffde7; padding:1px 6px; border-radius:4px; border:1px dashed #fbc02d;">${d.roll || '-'}</span></div>
+
             <div><b>नाम:</b> ${d.name || '-'}</div>
             <div><b>पिता/अभिभावक:</b> ${d.guardian || '-'}</div>
             <div><b>जन्म तिथि:</b> ${d.dob || '-'}</div>
