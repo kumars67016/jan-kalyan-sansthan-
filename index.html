@@ -77,7 +77,8 @@ form{background:#fff;border:1px solid #dce4ef;border-radius:18px;padding:clamp(1
   <form id="applicationForm" class="grid">
     <div class="field"><label for="student">प्रतिभागी का नाम (Student Name) *</label><input id="student" name="student" required placeholder="पूरा नाम लिखें"></div>
     <div class="field"><label for="guardian">पिता/अभिभावक का नाम *</label><input id="guardian" name="guardian" required placeholder="पिता का नाम लिखें"></div>
-    <div class="field"><label for="dob">जन्म तिथि (Date of Birth) *</label><input id="dob" name="dob" type="date" required></div>
+        <div class="field"><label for="dob">जन्म तिथि (Date of Birth) *</label><input id="dob" name="dob" type="text" inputmode="numeric" placeholder="DD/MM/YYYY" maxlength="10" pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(19|20)\d{2}" title="सही जन्म तिथि DD/MM/YYYY फ़ॉर्मेट में लिखें (जैसे: 02/02/2014)" required oninput="let v = this.value.replace(/\D/g, ''); if (v.length >= 2) v = v.slice(0,2) + '/' + v.slice(2); if (v.length >= 5) v = v.slice(0,5) + '/' + v.slice(5,9); this.value = v;"></div>
+
     <div class="field"><label for="aadhaar">आधार नंबर (12 अंकों का Aadhaar) *</label><input id="aadhaar" name="aadhaar" required pattern="[0-9]{12}" maxlength="12" placeholder="12 अंकों का आधार नंबर"></div>
     <div class="field"><label for="class">कक्षा चुनें (Select Class) *</label>
     <select id="class" name="class" required onchange="const f = this.options[this.selectedIndex].getAttribute('data-fee') || '0'; document.getElementById('feeText').innerText = f === '0' ? '₹0 (पहले कक्षा चुनें)' : '₹' + f; document.getElementById('feeAmount').value = f;">
